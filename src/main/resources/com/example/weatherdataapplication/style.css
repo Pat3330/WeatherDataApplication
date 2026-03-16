@@ -1,0 +1,22 @@
+.root {
+    -fx-background-color: RED;
+}
+
+.button {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+    -fx-background-color: WHITE;
+}
+
+.button:hover {
+    -fx-background-color: BLUE;
+}
+
+.label {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+    -fx-background-color: #12d8b9;
+    -fx-border-color: BLACK;
+}
