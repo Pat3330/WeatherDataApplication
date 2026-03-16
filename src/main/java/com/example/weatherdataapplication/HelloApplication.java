@@ -19,13 +19,16 @@ import java.util.List;
 public class HelloApplication extends Application {
     private int thresholdAmount = 10;
     private List<WeatherRecord> weatherData = new ArrayList<>();
+    private String currentMonth = "December";
+
     @Override
     public void start(Stage stage) throws Exception {
         weatherData = WeatherLoader.loadWeatherData();
+
         //------- Left side of the screen -------
         Button averageButton = new Button();
-        averageButton.setText("Average for Month");
-        averageButton.setPrefWidth(100);
+        averageButton.setText("Average for Month of " + currentMonth);
+        averageButton.setPrefWidth(120);
         averageButton.setPrefHeight(40);
 
         Button thresholdButton = new Button();
@@ -106,8 +109,29 @@ public class HelloApplication extends Application {
         HBox hbox = new HBox(30, vbox, TextFieldVBox);
         Pane root = new Pane(hbox);
 
+        setNewMonthButton.setOnAction(e -> {
+            String month = "";
+            try {
+                month = monthInput.getText();
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid input");
+                return;
+            }
+            if (month.isEmpty()) {
+                System.out.println("Month is empty");
+                return;
+            } else if (getMonth(month) != 0) {
+                currentMonth = month;
+                averageButton.setText("Average for Month of " + currentMonth);
+            } else {
+                System.out.println("Invalid month");
+            }
+        });
+
         averageButton.setOnAction(e -> {
             String state = describeCategory(categeorize(getAverageForMonth(weatherData)));
+            System.out.println(state);
+
             averageTextField.setText(getAverageForMonth(weatherData) + " " + state);
         });
 
@@ -130,7 +154,7 @@ public class HelloApplication extends Application {
 
     private double getAverageForMonth(List<WeatherRecord> weatherData) {
         return weatherData.stream()
-                .filter(r -> Integer.parseInt(r.date().substring(5, 7)) == 8)
+                .filter(r -> Integer.parseInt(r.date().substring(5, 7)) == getMonth(currentMonth))
                 .mapToDouble(WeatherRecord::temperature)
                 .average()
                 .orElse(0);
@@ -166,5 +190,25 @@ public class HelloApplication extends Application {
                 .filter(w -> w.precipitation() > 0)
                 .count();
     }
+
+    private int getMonth(String date){
+        return  switch (date){
+            case "January" -> 1;
+            case "February" -> 2;
+            case "March" -> 3;
+            case "April" -> 4;
+            case "May" -> 5;
+            case "June" -> 6;
+            case "July" -> 7;
+            case "August" -> 8;
+            case "September" -> 9;
+            case "October" -> 10;
+            case "November" -> 11;
+            case "December" -> 12;
+            default -> 0;
+        };
+    }
+
+
 
 }
