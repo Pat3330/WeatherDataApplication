@@ -1,7 +1,6 @@
 package com.example.weatherdataapplication;
 
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,8 +10,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
-import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,7 +126,7 @@ public class HelloApplication extends Application {
         });
 
         averageButton.setOnAction(e -> {
-            String state = describeCategory(categeorize(getAverageForMonth(weatherData)));
+            String state = describeCategory(categorize(getAverageForMonth(weatherData)));
             System.out.println(state);
 
             averageTextField.setText(getAverageForMonth(weatherData) + " " + state);
@@ -151,6 +148,22 @@ public class HelloApplication extends Application {
         stage.setTitle("Weather Data Application");
         stage.show();
     }
+    /**
+     * # Average Temperature for Selected Month
+     *
+     * Returns the average temperature for the selected month.
+     *
+     * ## Example
+     * ```java
+     * double avg = getAverageForMonth(weatherData);
+     * // returns the average temperature for the selected month
+     * ```
+     *
+     * @param weatherData the list of weather records loaded from the CSV
+     * @return the average temperature for the selected month, or `0` if no data matches
+     */
+
+
 
     private double getAverageForMonth(List<WeatherRecord> weatherData) {
         return weatherData.stream()
@@ -160,13 +173,52 @@ public class HelloApplication extends Application {
                 .orElse(0);
     }
 
+    /**
+     * # Days Above Temperature Threshold
+     *
+     * Counts how many days in the provided weather dataset have a
+     * temperature greater than the user‑selected threshold value.
+     *
+     * ## Example
+     * ```java
+     * long count = getDaysAboveThreshold(weatherData);
+     * // returns how many days were hotter than the threshold
+     * ```
+     *
+     * @param weatherData the list of weather records loaded from the CSV
+     * @return the number of days with temperatures above the threshold
+     */
+
+
     private double getDaysAboveThreshold(List<WeatherRecord> weatherData) {
         return weatherData.stream()
                 .filter(r -> r.temperature() > thresholdAmount)
                 .count();
     }
 
-    private String categeorize(double temp){
+    /**
+     * # Weather Category Calculator
+     *
+     * Determines a weather category based on temperature using an
+     * enhanced `switch` expression.
+     *
+     * ## Categories
+     * - **Hot**: 30° and above
+     * - **Warm**: 20–29°
+     * - **Cool**: 10–19°
+     * - **Cold**: below 10°
+     *
+     * ## Example
+     * ```java
+     * String weather = categorize(32); // returns "Hot"
+     * ```
+     *
+     * @param temp the temperature
+     * @return a category string such as `"Hot"`, `"Warm"`, `"Cold"`, or `"Freezing"`
+     */
+
+
+    private String categorize(double temp){
         return switch ((int) temp /10){
             case 3, 4 -> "Hot";
             case 2 -> "Warm";
@@ -174,6 +226,23 @@ public class HelloApplication extends Application {
             default -> "Freezing";
         };
     }
+
+    /**
+     * # Weather Category Description
+     *
+     * Uses pattern matching to provide
+     * a readable description for a weather category.
+     *
+     * ## Example
+     * ```java
+     * String desc = describeCategory("Hot");
+     * // "It's hot!"
+     * ```
+     *
+     * @param category the category returned by {@link #categorize(double)}
+     * @return a descriptive sentence for the category
+     */
+
 
     private String describeCategory(String category){
         return switch (category){
@@ -185,11 +254,44 @@ public class HelloApplication extends Application {
         };
     }
 
+    /**
+     * # Rainy Day Counter
+     *
+     * Counts how many days in the dataset have precipitation greater than zero.
+     *
+     * ## Example
+     * ```java
+     * long rainy = countRainyDays(data);
+     * ```
+     *
+     * @param weatherData the list of weather records
+     * @return number of rainy days
+     */
+
+
     private long countRainyDays(List <WeatherRecord> weatherData){
         return weatherData.stream()
                 .filter(w -> w.precipitation() > 0)
                 .count();
     }
+
+    /**
+     * # Month Name to Number Converter
+     *
+     * Converts a month name (e.g., {@code "January"}) into its corresponding
+     * numeric value using an enhanced {@code switch} expression.
+     *
+     *
+     * ## Example
+     * ```java
+     * int m = getMonth("March");
+     * // returns 3
+     * ```
+     *
+     * @param date the month name as a string (e.g., "January")
+     * @return the numeric month value, or {@code 0} if the name is invalid
+     */
+
 
     private int getMonth(String date){
         return  switch (date){
