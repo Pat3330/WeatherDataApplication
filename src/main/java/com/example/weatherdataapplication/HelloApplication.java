@@ -264,6 +264,7 @@ public class HelloApplication extends Application {
      * long rainy = countRainyDays(data);
      * ```
      *
+     *
      * @param weatherData the list of weather records
      * @return number of rainy days
      */
