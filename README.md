@@ -1,6 +1,6 @@
 # Weather Data Application
 
-This is an pplication that loads weather data from a CSV file and provides
+This is an application that loads weather data from a CSV file and provides
 features like checking the average temperature for a month, rainy days, and days
 above a threshold that the user is able to chnage. 
 
