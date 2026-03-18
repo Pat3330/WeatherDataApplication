@@ -19,8 +19,8 @@ above a threshold that the user is able to chnage.
   - Recieve a category and description for a given temperature.
 
 - **JavaFX UI**
-  - Text fields for input (temperature, threshold, month).
-  - Buttons to trigger analytics.
+  - Text fields for input (threshold and month).
+  - Buttons to trigger analyzation of information.
   - A result area that displays formatted summaries.
 
 ---
